@@ -2,6 +2,7 @@ const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
 const getAll = async (req, res) => {
+  //#swagger.tags=["users"]
   const result = await mongodb.getDatabase().db().collection("users").find();
   result.toArray().then((users) => {
     res.setHeader("Content-Type", "application/json");
@@ -24,14 +25,13 @@ const getSingle = async (req, res) => {
 
 const createUser = async (req, res) => {
   const user = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
     email: req.body.email,
-    birthday: req.body.birthday,
-    favoriteColor: req.body.favoriteColor
+    username: req.body.username,
+    name: req.body.name,
+    ipaddress: req.body.ipaddress
   };
   const response = await mongodb.getDatabase().db().collection("users").insertOne(user);
-  if (response.modifiedCount > 0) {
+  if (response.acknowledged) {
     res.status(204).send();
   } else {
     res.status(500).json(response.error || "Some error ocurred while updating the user.");
@@ -41,18 +41,17 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const userId = new ObjectId(req.params.id);
   const user = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
     email: req.body.email,
-    birthday: req.body.birthday,
-    favoriteColor: req.body.favoriteColor,
+    username: req.body.username,
+    name: req.body.name,
+    ipaddress: req.body.ipaddress
   };
   const response = await mongodb
     .getDatabase()
     .db()
     .collection("users")
     .replaceOne({ _id: userId }, user);
-  if (response.acknowledged) {
+  if (response.modifiedCount > 0) {
     res.status(204).send();
   } else {
     res
@@ -62,20 +61,13 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const userId = new ObjectId(req.params.id);
-  const user = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    birthday: req.body.birthday,
-    favoriteColor: req.body.favoriteColor,
-  };
+  const userId = new ObjectId(req.params.id); 
   const response = await mongodb
     .getDatabase()
     .db()
     .collection("users")
     .deleteOne({ _id: userId });
-  if (response.modifiedCount > 0) {
+  if (response.deleteCount > 0) {
     res.status(204).send();
   } else {
     res

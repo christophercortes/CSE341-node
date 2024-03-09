@@ -28,7 +28,7 @@ Content-Type: application/json
   }
 
 ### DELETE user
-DELETE http://localhost:3001/users/65ec9cf59779167d6ce14676
+DELETE http://localhost:3001/users/65eca001b1675e509574ba2f
 
 // PRODUCTION
 ### Home Page

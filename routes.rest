@@ -31,8 +31,14 @@ Content-Type: application/json
 DELETE http://localhost:3001/users/65ec9cf59779167d6ce14676
 
 // PRODUCTION
+### Home Page
+GET https://cse341-node-x3ll.onrender.com/
+
 ### Get all users
 GET https://cse341-node-x3ll.onrender.com/users
 
 ### Get user by id
 GET https://cse341-node-x3ll.onrender.com/users/65ec8dbbc2e08b6dafa1e7fe
+
+### Get swagger
+GET https://cse341-node-x3ll.onrender.com/api-docs/
